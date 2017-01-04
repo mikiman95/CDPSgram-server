@@ -32,9 +32,8 @@ exports.list = function (req, res) {
 				}
 				else{
 					//conected but empty
-					//res.send("No documents found in BBDD");
-					res.send("result: "+ result);
-
+					res.send("No documents found in BBDD");
+					
 				}
 
 				db.close();
