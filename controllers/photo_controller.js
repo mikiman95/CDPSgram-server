@@ -1,7 +1,7 @@
 var fs = require('fs');
 var photo_model = require('./../models/photo');
 var mongodb = require("mongodb"); //PARA BBDD
-
+var serverIP = "10.1.3.14"; //localhost
 
 // Devuelve una lista de las imagenes disponibles y sus metadatos
 exports.list = function (req, res) {
@@ -10,7 +10,7 @@ exports.list = function (req, res) {
 
 	
 	var MongoClient =mongodb.MongoClient;
-	var url = "mongodb://localhost:27017/serverDB";
+	var url = "mongodb://"+serverIP+":27017/serverDB";
 	MongoClient.connect(url,function(err,db){
 		if(err){
 			console.log("unable to conect to the mongodb server",err);
@@ -60,7 +60,7 @@ exports.show = function (req, res) {
 
 
 	var MongoClient =mongodb.MongoClient;
-	var url = "mongodb://localhost:27017/serverDB";
+	var url = "mongodb://"+serverIP+":27017/serverDB";
 	MongoClient.connect(url,function(err,db){
 		if(err){
 			console.log("unable to conect to the mongodb server",err);
@@ -115,7 +115,7 @@ exports.create = function (req, res) {
 
 
 	var MongoClient = mongodb.MongoClient;
-	var urlMongo = "mongodb://localhost:27017/serverDB";
+	var urlMongo = "mongodb://"+serverIP+":27017/serverDB";
 	MongoClient.connect(urlMongo,function(err,db){
 		if(err){
 			console.log("Unable to connect to mongodb",err);
