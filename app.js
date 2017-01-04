@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 
+var mongo = require("mongodb"); //PARA BBDD
+
 var routes = require('./routes/index');
 
 var app = express();
