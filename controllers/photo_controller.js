@@ -144,6 +144,7 @@ exports.create = function (req, res) {
 
 // Borra una foto (photoId) del registro de imagenes 
 exports.destroy = function (req, res) {
+/*
 	var photoId = req.params.photoId;
 
 	// Aquí debe implementarse el borrado del fichero de audio indetificado por photoId en photos.cdpsfy.es
@@ -151,4 +152,54 @@ exports.destroy = function (req, res) {
 	// Borra la entrada del registro de datos
 	delete photo_model.photos[photoId];
 	res.redirect('/photos');
+*/
+
+
+	var photoId = req.params.photoId;
+
+
+	var MongoClient =mongodb.MongoClient;
+	var url = "mongodb://"+serverIP+":27017/serverDB";
+	MongoClient.connect(url,function(err,db){
+		if(err){
+			console.log("unable to conect to the mongodb server",err);
+		}else{
+			console.log("connection established with mongo server");
+			var collection = db.collection ("photos");
+			
+			//{} es Todo everything
+			collection.find({}).toArray(function(err,result){
+
+				if(err){
+					//not conected
+					res.send(err); //sacar mensaje por pantalla
+				}
+				
+
+				else if (result.length){
+					//console.log("id = "+ photoId);
+					var photo = result[req.params.photoId];
+					//console.log("id2 = "+ photo._id)
+
+
+					collection.remove({ url : photo.url });
+					//db.photos.remove( { _id : ObjectId("587cc7e5b103060ac1f951ab") } )
+					//collection.remove({ _id : "ObjectId("+photo._id+")" });
+				}
+				else{
+					//conected but empty
+					res.send("No documents found in BBDD");
+				}
+
+
+				db.close();
+
+			});
+		}
+	})
+
+	res.redirect('/photos');
+
+
+
 };
